@@ -1,0 +1,10 @@
+  
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.Rbuildignore
+FARSfun.Rproj
+README.Rmd
+inst/doc
+pkgsteps.m
