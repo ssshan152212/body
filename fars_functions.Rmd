@@ -1,0 +1,78 @@
+title: "FARS Functions"
+subtitle: "Akram Syed"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FARS Functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## 1. Introduction
+The `FARSfun` package was developed as a part of course 3 -- *Building R Packages* -- of the *Mastering Software Development in R Specialization* offered by [Johns Hopkins University](https://www.jhu.edu/) through [Coursera](https://www.coursera.org/).
+
+The `FARSfun` package facilitates in reading and plotting fatalities using Fatality Analysis Reporting System (FARS) data 
+from the [National Highway Traffic Safety Administration](https://www.nhtsa.gov/research-data/fatality-analysis-reporting-system-fars).
+
+## 2. Setup
+```{r setup}
+library(FARSfun)
+library(maps)
+```
+
+## 3. Data
+There are three FARS datasets included within this package.
+
+```{r data}
+list.files(system.file("extdata", package = "FARSfun"))
+```
+
+
+## 4. Package Functions
+### 4.1. `fars_read`
+The `fars_read` function reads FARAS data and converts it to a `dplyr` data table. The file name is checked in the working directory. If it does not exist, the function is halted and a message is displayed to the console.
+
+```{r read, eval=FALSE}
+fars_read("accident_2015.csv.bz2")
+```
+
+### 4.2. `make_filename`
+The `make_filename` function creates a file name `accident_[year].csv.bz2` given a valid year.
+
+```{r makefilename}
+make_filename("2013")
+make_filename(2014)
+```
+
+### 4.3. `fars_read_years`
+The `fars_read_years` function reads file(s) and creates `dat` data tables for the year(s) needed -- provided the years argument is valid.
+
+```{r readyears, warning=FALSE}
+fars_read_years(c("2013", 2014))
+fars_read_years(2014:2015)
+```
+
+### 4.4. `fars_summarize_years`
+The `fars_summarize_years` function retrieves data tables and summarizes counts by `year` and `MONTH`.
+
+```{r summarize, warning=FALSE}
+fars_summarize_years(c("2013", 2014, "2015"))
+fars_summarize_years(2013:2015)
+```
+
+### 4.5. `fars_map_state`
+The `fars_map_state` function plots fatal data on a map for the state and year provided.
+
+```{r mapstate, warning=FALSE}
+fars_map_state(12, 2014)
+fars_map_state("1", "2015")
+```
+
+For more information, visit this package's [GitHub page](https://github.com/akram-syed/FARSfun).
